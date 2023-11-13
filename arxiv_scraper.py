@@ -31,8 +31,8 @@ class ArxivScraper:
             for result in results:
                 title = result.find("p", class_="title is-5 mathjax").text.strip()
                 abstract = result.find("span", class_="abstract-full has-text-grey-dark mathjax").text.strip()
-                link = result.find("a", class_="title is-5")["href"]
-                paper = f"Title: {title}\nAbstract: {abstract}\nLink: {link}\n"
+                link = result.find("p", class_="list-title is-inline-block").a["href"]
+                paper = f"{title}[SPLIT]{abstract}[SPLIT]{link}"
                 self.papers.append(paper)
     def filter_papers(self, domain):
         filtered_papers = []
