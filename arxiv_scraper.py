@@ -34,9 +34,16 @@ class ArxivScraper:
                 link = result.find("p", class_="list-title is-inline-block").a["href"]
                 paper = f"{title}[SPLIT]{abstract}[SPLIT]{link}"
                 self.papers.append(paper)
-    def filter_papers(self, domain):
+    def filter_papers(self, key_words):
         filtered_papers = []
+        if isinstance(key_words,str):
+            key_words = [key_words]
         for paper in self.papers:
-            if domain.lower() in paper.lower():
+            flag = True
+            for key_word in key_words:
+                if key_word.lower() not in paper.lower():
+                    flag=False
+                    break
+            if flag:
                 filtered_papers.append(paper)
         return filtered_papers

@@ -46,7 +46,7 @@ class App:
         self.papers_treeview.config(yscrollcommand=self.scrollbar.set)
         self.scrollbar.grid(row=3, column=2, sticky=(N, S))
 
-        self.filter_label = Label(root, text="Filter papers by domain:")
+        self.filter_label = Label(root, text="Filter papers by keyword:")
         self.filter_label.grid(row=4, column=0, sticky=W)
         self.filter_entry = Entry(root)
         self.filter_entry.grid(row=4, column=1, sticky=W)
@@ -84,10 +84,11 @@ class App:
             self.display_papers(filtered_papers)
         else:
             self.display_papers(self.scraper.papers)
-        self.root.after(interval * 60 * 1000, self.update_display,interval)  #interval ms 每隔1秒更新一次显示状态
+        self.root.after(interval * 60 * 1000, self.update_display,interval)
+
     def filter_papers(self):
-        domain = self.filter_entry.get()
-        filtered_papers = self.scraper.filter_papers(domain)
+        key_words = self.filter_entry.get().split(",")
+        filtered_papers = self.scraper.filter_papers(key_words)
         self.display_papers(filtered_papers)
 
 root = Tk()
